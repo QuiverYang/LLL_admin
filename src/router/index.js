@@ -3,7 +3,7 @@ import VueRouter from 'vue-router'
 
 Vue.use(VueRouter)
 
-import Store from '@/components/stores'
+import StoreInfo from '@/components/stores/info'
 import Page from '@/components/pages/page'
 import child from '@/components/pages/child'
 import child2 from '@/components/pages/child2'
@@ -15,6 +15,9 @@ import Navbar from '@/components/navbar'
 import User from '@/components/users'
 import Main from '@/components/main'
 import Analysis from '@/components/analysis'
+import AddStore from '@/components/stores/addStore'
+import Store from '@/components/stores/stores'
+import Welcome from '@/components/welcome'
 
 
 export default new VueRouter ({
@@ -24,7 +27,7 @@ export default new VueRouter ({
             name:'主畫面',
             path:'/',
             components:{
-                default: Main,
+                default: Welcome,
                 navbar: Navbar
             },
         },
@@ -33,7 +36,7 @@ export default new VueRouter ({
             path:'/login',
             component: Login
         },
-
+        
         {
             name:'err404',
             path:'/err404',
@@ -50,7 +53,19 @@ export default new VueRouter ({
                 {
                     name:'店家',
                     path:'stores',
-                    component: Store
+                    component: Store,
+                    children:[
+                        {
+                            name:'店家資訊',
+                            path:'storeInfo',
+                            component:StoreInfo
+                        },
+                        {
+                            name:'新增店家',
+                            path:'addStore',
+                            component:AddStore
+                        },
+                    ]
                 },
                 {
                     name:'客戶',    //如果children裡面有path:''是預設值的話 裡面的name將取代這裡的name 所以 這裡可以不用寫
@@ -80,7 +95,7 @@ export default new VueRouter ({
                     path:'analysis',
                     component: Analysis
                 },
-        
+                
             ]
         },
         
