@@ -2,8 +2,6 @@
   <div id="app">
     <router-view name = "navbar"></router-view>
     <!-- <HelloWorld/> -->
-    
-
     <router-view></router-view>
   </div>
 </template>

@@ -3,19 +3,20 @@
     <div class="card" style="width: 30rem;">
       <div class="card-body">
         <h5 class="card-title">新增店家</h5>
-        <template v-for="item in storeSchema">
-          <div class="input-group mb-3" :key="item">
+        <template v-for="(item,index) in storeSchema">
+          <div v-if="item !=='queue' && item !=='imgURL'" class="input-group mb-3" :key="item">
             <div class="input-group-prepend" style="width : 150px">
               <span class="input-group-text" style="width:100%">{{item}}</span>
             </div>
             <input
               type="text"
               class="form-control"
-              :placeholder="item"
+              v-model="input[index]"
             />
           </div>
         </template>
-        <a href="#" class="btn btn-success w-100">新增</a>
+
+        <a href="#" @click="addStore" class="btn btn-success w-100">新增</a>
       </div>
     </div>
   </div>
@@ -25,7 +26,9 @@
 export default {
   data() {
     return {
-      storeSchema: []
+      storeSchema: [],
+      postKeyValues:{},
+      input:[],
     };
   },
   created: function() {
@@ -39,32 +42,29 @@ export default {
   },
   methods: {
     addStore() {
+      let postKeyValues = {}
+      if(this.input.length<7){
+          alert('填入資料不能為空');
+          postKeyValues ={}
+          return;
+        };
+      for(var i = 0; i < this.input.length; i++){
+        if(!this.input[i]||this.input.length<8){
+          alert('填入資料不能為空');
+          postKeyValues ={}
+          return;
+        };
+        postKeyValues[this.storeSchema[i]] = this.input[i];
+      };
       this.$http
-        .post("http://34.80.102.113:3000/leadline/store/create", {
-          name: this.name,
-          phone: this.phone,
-          password: this.password,
-          address: this.address,
-          info: this.info,
-          currentExhibit: this.currentExhibit,
-          email: this.email
-        })
+        .post("http://34.80.102.113:3000/leadline/store/create",postKeyValues)
         .then(response => {
           console.log(response.data);
-          this.newStores.push({
-            name: this.name,
-            phone: this.phone,
-            password: this.password,
-            address: this.address,
-            info: this.info,
-            currentExhibit: this.currentExhibit,
-            email: this.email
-          });
-          this.$router.push("/main/stores/addStore");
-        });
+          this.$router.push("/main/stores/storeInfo");
+      });
     }
   }
-};
+}
 </script>
 
 <style scoped>

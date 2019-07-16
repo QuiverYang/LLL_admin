@@ -3,20 +3,17 @@ import VueRouter from 'vue-router'
 
 Vue.use(VueRouter)
 
-import StoreInfo from '@/components/stores/info'
-import Page from '@/components/pages/page'
-import child from '@/components/pages/child'
-import child2 from '@/components/pages/child2'
-import child3 from '@/components/pages/child3'
-import Menu from '@/components/pages/menu'
 import Login from '@/components/login'
 import Err404 from '@/components/err404'
 import Navbar from '@/components/navbar'
-import User from '@/components/users'
+import UserInfo from '@/components/users/info'
+import User from '@/components/users/users'
+import AddUser from '@/components/users/addUser'
 import Main from '@/components/main'
 import Analysis from '@/components/analysis'
-import AddStore from '@/components/stores/addStore'
 import Store from '@/components/stores/stores'
+import StoreInfo from '@/components/stores/info'
+import AddStore from '@/components/stores/addStore'
 import Welcome from '@/components/welcome'
 
 
@@ -71,24 +68,19 @@ export default new VueRouter ({
                     name:'客戶',    //如果children裡面有path:''是預設值的話 裡面的name將取代這裡的name 所以 這裡可以不用寫
                     path:'users',
                     // component: Page,
-                    component: User
-                    // children:[
-                    //     {
-                    //         name:'卡片一',
-                    //         path:'',
-                    //         component:child
-                    //     },
-                    //     {
-                    //         name:'卡片二',
-                    //         path:'child2',
-                    //         component:child2
-                    //     },
-                    //     {
-                    //         name:'卡片三',
-                    //         path:'child3',
-                    //         component:child3
-                    //     }
-                    // ]
+                    component: User,
+                    children:[
+                        {
+                            name:'客戶資訊',
+                            path:'userInfo',
+                            component:UserInfo
+                        },
+                        {
+                            name:'新增客戶',
+                            path:'addUser',
+                            component:AddUser
+                        },
+                    ]
                 },
                 {
                     name:'分析',

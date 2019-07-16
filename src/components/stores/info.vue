@@ -2,7 +2,7 @@
   <div>
     <div class="table-responsive">
       <table class="table table-striped">
-        <thead class="thead-dark">
+        <thead class="thead-dark"  @click="syncUsersNewUsers">
           <tr>
             <th scope="col">#</th>
             <template v-for="item in storeSchema">
@@ -57,7 +57,8 @@ export default {
       stores: [],
       newStores: [],
       cacheInput: "",
-      storeSchema: []
+      storeSchema: [],
+      isClicked:false,
     };
   },
   methods: {
@@ -83,7 +84,18 @@ export default {
     addStore() {
       this.$router.push("/main/stores/addStore");
     },
+    syncUsersNewUsers(){
+      var vm = this;
+      for(let i = 0; i < vm.newStores.length; i++){
+        for(let key2 in vm.newStores[i]){
+          vm.newStores[i][key2] = vm.stores[i][key2];
+        }
+      }
+      this.isClicked = false;
+    },
     editStore2(names, key) {
+      this.syncUsersNewUsers();
+      this.isClicked = true;
       this.newStores[key][names] = "-1";
     },
     confirmEdit(names, key, input, email) {
@@ -110,6 +122,7 @@ export default {
     },
     cancleEdit(names, key) {
       this.newStores[key][names] = this.stores[key][names];
+      this.isClicked = false;
     }
   },
   created() {
