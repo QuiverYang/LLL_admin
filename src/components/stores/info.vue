@@ -6,7 +6,7 @@
           <tr>
             <th scope="col">#</th>
             <template v-for="item in storeSchema">
-              <th scope="col" :key="item">
+              <th scope="col" :key="item" v-if="item !== 'queue' && item!=='post'&& item!=='visitorTime'">
                 <div class="text-center">{{ item }}</div>
               </th>
             </template>
@@ -17,7 +17,11 @@
           <tr class="text-center" v-for="(item,key) in stores" v-bind:key="item.name">
             <th class="align-middle" scope="col">{{key+1}}</th>
             <template v-for="(value, names) in item">
-              <td v-if="names!=='__v' && names !=='_id'" class="align-middle" scope="col" :key="names" @dblclick="editStore2(names,key)">
+              <td v-if="names!=='__v' && names !=='_id' && names !== 'queue' && names!=='post'&& names!=='visitorTime'"
+                  class="align-middle"
+                  scope="col"
+                  :key="names"
+                  @dblclick="editStore2(names,key)">
                 <div
                   class="text-center"
                   v-if="newStores[key][names]===stores[key][names]"
@@ -38,6 +42,7 @@
 
             <th class="align-middle">
               <a href="#" class="btn btn-outline-danger" @click.prevent="removeStore(item)">刪除</a>
+              <i class="el-icon-delete"></i>
             </th>
           </tr>
         </tbody>

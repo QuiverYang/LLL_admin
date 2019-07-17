@@ -4,7 +4,7 @@
       <div class="card-body">
         <h5 class="card-title">新增店家</h5>
         <template v-for="(item,index) in storeSchema">
-          <div v-if="item !=='queue' && item !=='imgURL'" class="input-group mb-3" :key="item">
+          <div v-if="item !=='queue' && item !=='imgURL' &&item !=='visitorTime'&&item !=='post'" class="input-group mb-3" :key="item">
             <div class="input-group-prepend" style="width : 150px">
               <span class="input-group-text" style="width:100%">{{item}}</span>
             </div>
@@ -43,13 +43,13 @@ export default {
   methods: {
     addStore() {
       let postKeyValues = {}
-      if(this.input.length<7){
+      if(this.input.length<9){
           alert('填入資料不能為空');
           postKeyValues ={}
           return;
         };
       for(var i = 0; i < this.input.length; i++){
-        if(!this.input[i]||this.input.length<8){
+        if(!this.input[i]||this.input.length<9){
           alert('填入資料不能為空');
           postKeyValues ={}
           return;
