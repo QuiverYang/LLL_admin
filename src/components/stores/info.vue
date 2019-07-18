@@ -42,7 +42,7 @@
 
             <th class="align-middle">
               <a href="#" class="btn btn-outline-danger" @click.prevent="removeStore(item)">刪除</a>
-              <i class="el-icon-delete"></i>
+              <!-- <i href="#" class="el-icon-delete red" @click.prevent="removeStore(item)"></i> -->
             </th>
           </tr>
         </tbody>
