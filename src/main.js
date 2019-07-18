@@ -161,6 +161,15 @@ Vue.use(Backtop);
 Vue.use(PageHeader);
 Vue.use(CascaderPanel);
 
+import BootstrapVue from 'bootstrap-vue'
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
+Vue.use(BootstrapVue);
+
+import VCharts from 'v-charts'
+import Echarts from 'echarts'
+Vue.use(VCharts,Echarts);
+
 import Element from 'element-ui';
 Vue.use(Element, { size: 'small', zIndex: 3000 });
 

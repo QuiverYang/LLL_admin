@@ -1,79 +1,116 @@
 <template>
-  <div class="hello">
-  
-    <button @click="toggle()" class="btn btn-primary">toggle</button>
-    <!-- <ul id="">
-      <li v-for="(item) in object" :key="item.title">
-         {{item.title}}
-      </li>
-    </ul> -->
-    <div v-for="(value, name, index) in object" :key="value">
-      {{ index }}. {{ name }}: {{ value }}
+<div class="container mt-3">
+  <div class="row">
+    <div class="col-lg-4 col-md-6 col-sm-12" v-for="data in chartData" :key="data.email">
+      <div >
+        <ve-histogram
+        :title="{text:data.name}"
+        :data="data"
+        :settings="chartSettings"
+        :grid="grid"
+        :visual-map="visualMap"></ve-histogram>
+      </div>
     </div>
   </div>
+  
+</div>
+  
 </template>
 
 <script>
-var m1 = '页面加载于 ' + new Date().toLocaleString();
-var obj = {
-  foo: 'bar'
-}
-// Object.freeze(obj); --> to make obj  'read only'
-export default {
-  data () {
-    return {
-      question: '',
-      answer: 'I cannot give you an answer until you ask a question!',
-      object: {
-        title: 'How to do lists in Vue',
-        author: 'Jane Doe',
-        publishedAt: '2016-04-10'
-      },
-      isShow:true,
-      items: [
-        { message: 'Foo' },
-        { message: 'Bar' }
-      ],
+import 'echarts/lib/component/visualMap'
 
+export default {
+  
+  data () {
+    this.visualMap = [
+        {
+          type: 'piecewise',
+          splitNumber: 5,
+          min: 0,
+          max: 10,
+          right: 0,
+          top: '50%'
+        }
+      ]
+    this.grid = {
+      right: 70
+    }
+    this.chartSettings = {
+        labelMap: {
+          'PV': '店名',
+        },
+        legendName: {
+          '访问用户': '访问用户 total: 10000'
+        },
+      }
+    return {
+      chartData: [/* {columns: ['time', 'visitorNum'],rows: []} */],
+      stores:[],
+      timer:'',
+      
     }
   },
   watch: {
-    // 如果 `question` 发生改变，这个函数就会运行
-    question: function (newQuestion, oldQuestion) {
-      this.answer = 'Waiting for you to stop typing...'
-      this.debouncedGetAnswer()
-    }
+
   },
   created: function () {
-    // `_.debounce` 是一个通过 Lodash 限制操作频率的函数。
-    // 在这个例子中，我们希望限制访问 yesno.wtf/api 的频率
-    // AJAX 请求直到用户输入完毕才会发出。想要了解更多关于
-    // `_.debounce` 函数 (及其近亲 `_.throttle`) 的知识，
-    // 请参考：https://lodash.com/docs#debounce
-    this.debouncedGetAnswer = _.debounce(this.getAnswer, 500)
+    this.fetchData();
+    this.timer = setInterval(this.fetchData,1000*10);
+  },
+  beforeDestroy() {
+    clearInterval(this.timer);
   },
   methods: {
-    getAnswer: function () {
-      if (this.question.indexOf('?') === -1) {
-        this.answer = 'Questions usually contain a question mark. ;-)'
-        return
-      }
-      this.answer = 'Thinking...'
-      var vm = this
-      axios.get('https://yesno.wtf/api')
-        .then(function (response) {
-          vm.answer = _.capitalize(response.data.answer)
+    fetchData(){
+      this.$http
+        .get("http://34.80.102.113:3000/leadline/store/getQueueInfo", {
+          headers: { "x-access-token": localStorage.getItem("token") }
         })
-        .catch(function (error) {
-          vm.answer = 'Error! Could not reach the API. ' + error
-        })
+        .then(response => {
+          let data = response.data.msg;
+          let obj = {}
+          this.chartData = [];
+          for(let i = 0; i < data.length; i++){
+
+            obj = {
+              email:data[i].email,
+              name:data[i].name,
+              columns: ['時間','人數'],
+              rows:data[i].timeAndVisitor
+            };
+            this.chartData.push(obj);
+          }
+          console.log('upadted')
+        });
+          //this.charData.rows is like the following
+          // [
+          //   {
+          //       "name": "捷克漢堡",
+          //       "eamil":jack@gamil.com
+          //       "timeAndVisitor": [
+          //           {"time": 8,"visitorNum": 3},
+          //           {"time": 9,"visitorNum": 1},
+          //           {"time": 10,"visitorNum": 2},
+          //           {"time": 11,"visitorNum": 2},
+          //           {"time": 12,"visitorNum": 1},
+          //           {"time": 13,"visitorNum": 0},
+          //           {"time": 14,"visitorNum": 0},
+          //           {"time": 15,"visitorNum": 0},
+          //           {"time": 16,"visitorNum": 0},
+          //           {"time": 17,"visitorNum": 0},
+          //           {"time": 18,"visitorNum": 0}
+          //       ]
+          //   },]
     },
-    toggle(){
-      var vm =this;
-      vm._data.items[0].message = 'test'
-      // this.items.push({ message: 'Baz' });
-      vm.$set(vm.object, 'age', 27);
-    }
+    cancelAutoUpdate: function() { clearInterval(this.timer) },
+
   }
 }
 </script>
+
+<style scoped>
+.container{
+  max-width: 80%;
+}
+</style>

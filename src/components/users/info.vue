@@ -1,5 +1,5 @@
 <template>
-  <div class="user">
+  <div id="dtBasicExample" class="table table-striped ">
     <div class="table-responsive">
       <table class="table table-striped">
         <thead class="thead-dark" @click="syncUsersNewUsers">
@@ -60,19 +60,15 @@
       <a href="#" class="btn btn-outline-success w-100" @click.prevent="addUser">新增</a>
     </div>
 
+
+
     
 
   </div>
 </template>
 
+
 <script>
-import Vue from 'vue'
-
-Vue.directive('closable', {
-  bind (el, binding, vnode) {
-
-  }
-})
 
 export default {
   name: "User",
@@ -160,7 +156,7 @@ export default {
     changedUsers: function() {
       this.newUsers = this.users;
       return this.newUsers;
-    }
+    },
   },
   created() {
     this.$http
