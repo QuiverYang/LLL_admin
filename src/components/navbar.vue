@@ -20,6 +20,14 @@
           <li class="nav-item">
             <router-link class="nav-link" to="/main/analysis">動線分析</router-link>
           </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              動線分析
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <a v-for="ex in exhibitions" :key="ex" class="dropdown-item" href="#">{{ex}}</a>
+            </div>
+          </li>
         </ul>
         <ul class="navbar-nav ml-auto">
             <li class="nav-item">
@@ -44,7 +52,7 @@ export default {
   },
   data () {
     return {
-
+      exhibitions:['ex1','ex2','ex3']
     }
   },
   methods: {

@@ -10,7 +10,9 @@ import UserInfo from '@/components/users/info'
 import User from '@/components/users/users'
 import AddUser from '@/components/users/addUser'
 import Main from '@/components/main'
-import Analysis from '@/components/analysis'
+import Analysis from '@/components/analysis/analysis'
+import Analysis1 from '@/components/analysis/analysis1'
+import Analysis2 from '@/components/analysis/analysis2'
 import Store from '@/components/stores/stores'
 import StoreInfo from '@/components/stores/info'
 import AddStore from '@/components/stores/addStore'
@@ -45,6 +47,7 @@ export default new VueRouter ({
             components:{
                 default: Main,
                 navbar: Navbar
+                
             },
             children:[
                 {
@@ -85,7 +88,20 @@ export default new VueRouter ({
                 {
                     name:'分析',
                     path:'analysis',
-                    component: Analysis
+                    component: Analysis,
+                    children:[
+                        {
+                            name:'分析一',
+                            path:'analysis1',
+                            component:Analysis1
+                        },
+                        {
+                            name:'分析二',
+                            path:'analysis2',
+                            component:Analysis2
+                        },
+                    ]
+
                 },
                 
             ]
