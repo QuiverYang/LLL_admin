@@ -2,7 +2,7 @@
   <div id="">
     
     <nav class="navbar navbar-expand-lg navbar-light bg-light" id="">
-      <a class="navbar-brand" href="#/">LeadLL</a>
+      <a class="navbar-brand" href="#/main">LeadLL</a>
       <!-- <button class="navbar-toggler first-button" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <div class="animated-icon1"><span></span><span></span><span></span></div>
@@ -17,17 +17,16 @@
           <li class="nav-item">
             <router-link class="nav-link" to="/main/users/userInfo">使用者資訊</router-link>
           </li>
-          <li class="nav-item">
-            <router-link class="nav-link" to="/main/analysis">動線分析</router-link>
-          </li>
+
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               動線分析
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-              <a v-for="ex in exhibitions" :key="ex" class="dropdown-item" href="#">{{ex}}</a>
+              <a v-for="(ex,index) in exhibitions" :key="index" class="dropdown-item" href="#" @click="linkto(index)">{{ex}}</a>
             </div>
           </li>
+
         </ul>
         <ul class="navbar-nav ml-auto">
             <li class="nav-item">
@@ -52,7 +51,9 @@ export default {
   },
   data () {
     return {
-      exhibitions:['ex1','ex2','ex3']
+      exhibitions:[],
+      
+      exhibitName:'',
     }
   },
   methods: {
@@ -60,9 +61,23 @@ export default {
           localStorage.removeItem('token');
           console.log('removed token');
           this.$router.push('/login')
+      },
+      linkto(index){
+        this.exhibitName = this.exhibitions[index];
+        this.$emit('fromNavBar', this.exhibitName);
+        this.$router.push('/main/analysis');
       }
   },
   created(){
+    this.$http
+    .get("http://34.80.102.113:3000/leadline/exhibition/getAllExhibitName", {
+      headers: { "x-access-token": localStorage.getItem("token") }
+    })
+    .then(response => {
+      this.exhibitions = response.data.msg;
+      
+      console.log('this.exhibitions: '+this.exhibitions);
+    });
   }
 }
 </script>

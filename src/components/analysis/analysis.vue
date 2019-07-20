@@ -5,13 +5,14 @@
       <router-link class="" to="/main/analysis/analysis2">分析二</router-link>
     </div>
       <div >
-        <router-view></router-view>
+        <router-view :exhibit-name="exhibitName"></router-view>
       </div>
   </div>
 </template>
 
 <script>
 export default {
+  props:['exhibitName'],
   data () {
     return {
 

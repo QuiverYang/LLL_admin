@@ -21,6 +21,7 @@ import Welcome from '@/components/welcome'
 
 export default new VueRouter ({
     // linkActiveClass:'active',
+    // mode:history,
     routes:[
         {
             name:'主畫面',

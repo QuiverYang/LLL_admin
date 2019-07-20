@@ -21,7 +21,7 @@
 import 'echarts/lib/component/visualMap'
 
 export default {
-  
+  props:['exhibitName'],
   data () {
     this.visualMap = [
         {
@@ -40,21 +40,19 @@ export default {
         labelMap: {
           'PV': '店名',
         },
-        legendName: {
-          '访问用户': '访问用户 total: 10000'
-        },
       }
     return {
       chartData: [/* {columns: ['time', 'visitorNum'],rows: []} */],
       stores:[],
       timer:'',
-      
+      anaExhibitName:'',
     }
   },
   watch: {
 
   },
   created: function () {
+    this.anaExhibitName = this.exhibitName;
     this.fetchData();
     this.timer = setInterval(this.fetchData,1000*10);
   },
@@ -63,8 +61,9 @@ export default {
   },
   methods: {
     fetchData(){
+      let api = "http://34.80.102.113:3000/leadline/store/getQueueInfo?name="+this.exhibitName
       this.$http
-        .get("http://34.80.102.113:3000/leadline/store/getQueueInfo", {
+        .get(api, {
           headers: { "x-access-token": localStorage.getItem("token") }
         })
         .then(response => {
