@@ -9,14 +9,18 @@
     </div> -->
     
     <div >
-      <router-view :exhibit-name="exhibitName"></router-view>
+      <router-view 
+      :toexhibitions="toexhibitions"
+      :exhibit-name="exhibitName"
+      @changeExhibition="clickChangeExhibition">
+      </router-view>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  props:['exhibitName'],
+  props:['exhibitName','toexhibitions'],
   data () {
     return {
       mainexhibitName:''
@@ -24,6 +28,11 @@ export default {
   },
   created(){
     this.mainexhibitName = this.exhibitName;
+  },
+  methods:{
+    clickChangeExhibition(event){
+      this.$emit('changeExhibition', event);
+    }
   }
 }
 </script>

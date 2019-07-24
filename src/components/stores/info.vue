@@ -4,7 +4,7 @@
       <table class="table table-striped">
         <thead class="thead-dark"  @click="syncUsersNewUsers">
           <tr>
-            <th scope="col">#</th>
+            <th scope="col" class="text-center">#</th>
             <template v-for="item in storeSchema">
               <th scope="col" :key="item" v-if="item !== 'queue' && item!=='post'&& item!=='visitorTime'">
                 <div class="text-center">{{ item }}</div>
@@ -41,7 +41,7 @@
             </template>
 
             <th class="align-middle">
-              <a href="#" class="btn btn-outline-danger" @click.prevent="removeStore(item)">刪除</a>
+                <a href="#" class="btn btn-outline-danger" style="font-size:0.5rem" @click.prevent="removeStore(item)">刪除</a>
               <!-- <i href="#" class="el-icon-delete red" @click.prevent="removeStore(item)"></i> -->
             </th>
           </tr>
@@ -49,7 +49,7 @@
       </table>
     </div>
     <div class="center">
-      <a href="#" class="btn btn-outline-success w-100" @click.prevent="addStore">新增</a>
+      <a href="#" class="btn btn-outline-success w-100 mb-5 mt-3" @click.prevent="addStore">新增</a>
     </div>
   </div>
 </template>
@@ -64,9 +64,11 @@ export default {
       cacheInput: "",
       storeSchema: [],
       isClicked:false,
+      visible:[],
     };
   },
   methods: {
+    
     removeStore(item) {
       console.log(item);
       let newIndex = "";
@@ -149,6 +151,7 @@ export default {
         //   item.isEditing = false;
         // })
         this.newStores = _.cloneDeep(this.stores);
+        
       });
   },
   beforeMount() {}

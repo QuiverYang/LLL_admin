@@ -1,6 +1,6 @@
 <template>
   <div id="">
-    
+    {{update}}
     <nav class="navbar navbar-expand-lg navbar-light bg-light" id="">
       <a class="navbar-brand" href="#/main">LeadLL</a>
       <!-- <button class="navbar-toggler first-button" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -11,6 +11,9 @@
       </burger-button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="nav navbar-nav mr-auto">
+          <li class="nav-item">
+            <router-link class="nav-link" to="/main/exhibitions/exhibitionInfo">活動資訊</router-link>
+          </li>
           <li class="nav-item">
             <router-link class="nav-link" to="/main/stores/storeInfo">店家資訊</router-link>
           </li>
@@ -46,6 +49,8 @@
 import BurgerButton from '@/components/BurgerButton';
 
 export default {
+
+  props:['toexhibitions'],
   components: {
     BurgerButton
   },
@@ -74,10 +79,16 @@ export default {
       headers: { "x-access-token": localStorage.getItem("token") }
     })
     .then(response => {
+      //拿到所有展的展名
       this.exhibitions = response.data.msg;
-      
-      console.log('this.exhibitions: '+this.exhibitions);
+      this.$emit('changeExhibition', response.data.msg);
     });
+    
+  },
+  computed:{
+    update(){
+      this.exhibitions = this.toexhibitions;
+    }
   }
 }
 </script>

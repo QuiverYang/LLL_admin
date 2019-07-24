@@ -2,9 +2,15 @@
   <div id="app">
     <router-view 
     name = "navbar"
-    @fromNavBar="test"></router-view>
+    :toexhibitions="toexhibitions"
+    @fromNavBar="clicknavbar"
+    @changeExhibition="clickChangeExhibition"></router-view>
     <!-- <HelloWorld/> -->
-    <router-view :exhibit-name="exhibitName"></router-view>
+    <router-view 
+      :toexhibitions="toexhibitions"
+      :exhibit-name="exhibitName"
+      @changeExhibition="clickChangeExhibition">
+    </router-view>
   </div>
 </template>
 
@@ -16,15 +22,19 @@ export default {
   data(){
     return{
       exhibitName:'',
+      toexhibitions:[]
     }
   },
   components: {
     Main
   },
   methods:{
-    test(event){
+    clicknavbar(event){
       this.exhibitName = event;
-      console.log(this.exhibitName);
+    },
+    clickChangeExhibition(event){
+      console.log('from app remov',event)
+      this.toexhibitions = event;
     }
   }
 }

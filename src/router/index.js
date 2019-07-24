@@ -12,10 +12,13 @@ import AddUser from '@/components/users/addUser'
 import Main from '@/components/main'
 import Analysis from '@/components/analysis/analysis'
 import Analysis1 from '@/components/analysis/analysis1'
-import Analysis2 from '@/components/analysis/analysis2'
+import Analysis2 from '@/components/analysis/analysis2/analysis2'
 import Store from '@/components/stores/stores'
 import StoreInfo from '@/components/stores/info'
 import AddStore from '@/components/stores/addStore'
+import Exhibition from '@/components/exhibitions/exhibit'
+import AddExhibition from '@/components/exhibitions/addExhibit'
+import ExhibitionInfo from '@/components/exhibitions/info'
 import Welcome from '@/components/welcome'
 
 
@@ -103,6 +106,23 @@ export default new VueRouter ({
                         },
                     ]
 
+                },
+                {
+                    name:'展覽',
+                    path:'exhibitions',
+                    component: Exhibition,
+                    children:[
+                        {
+                            name:'活動資訊',
+                            path:'exhibitionInfo',
+                            component:ExhibitionInfo,
+                        },
+                        {
+                            name:'新增活動',
+                            path:'addExhibition',
+                            component:AddExhibition,
+                        },
+                    ]
                 },
                 
             ]

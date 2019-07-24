@@ -4,7 +4,7 @@
       <table class="table table-striped">
         <thead class="thead-dark" @click="syncUsersNewUsers">
           <tr>
-            <th scope="col">#</th>
+            <th scope="col" class="text-center">#</th>
             <template v-for="item in userSchema">
               <th scope="col" :key="item">
                 <div class="text-center">{{ item }}</div>
@@ -18,7 +18,7 @@
             <th class="align-middle" scope="col">{{index+1}}</th>
             <template v-for="(value, names) in user"> 
               <td
-                v-if="names!=='__v' && names !=='_id' && names !=='auth' && names !=='line' "
+                v-if="names!=='__v' && names !=='_id' && names !=='auth' && names !=='line' && names !=='newPostNum'"
                 class="align-middle"
                 scope="col"
                 :key="names"
@@ -50,14 +50,14 @@
             </template>
 
             <th class="align-middle">
-              <a href="#" class="btn btn-outline-danger" @click.prevent="removeUser(user)">刪除</a>
+              <a href="#" class="btn btn-outline-danger" style="font-size:0.5rem" @click.prevent="removeUser(user)">刪除</a>
             </th>
           </tr>
         </tbody>
       </table>
     </div>
     <div class="center">
-      <a href="#" class="btn btn-outline-success w-100" @click.prevent="addUser">新增</a>
+      <a href="#" class="btn btn-outline-success w-100 mb-5 mt-3" @click.prevent="addUser">新增</a>
     </div>
 
 
